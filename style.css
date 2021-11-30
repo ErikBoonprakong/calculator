@@ -1,0 +1,14 @@
+.square{
+    width: 60px;
+    height: 60px;
+}
+
+.top{
+    height: 25px;
+}
+
+#display{
+    text-align: right;
+    font-size: large;
+    font-family: sans-serif;
+}
