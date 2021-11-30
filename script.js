@@ -2,7 +2,6 @@ let display = document.getElementById('display')
 let numOne = 0;
 let numTwo = 0;
 let operand = null;
-let displayNum = 0
 let buttons = Array.from(document.getElementsByClassName('button'))
 let nextNum = ''
 
@@ -26,7 +25,12 @@ buttons.map (function mapNumTwo(button) {
                 display.innerText = display.innerText.slice(0, -1);
                 break;
             case '=':
-                numTwo = parseInt(nextNum)
+                if (parseFloat(nextNum) != NaN){
+                    numTwo = parseFloat(nextNum)}
+                    else{
+                        display.innerText = numOne;
+                    }
+                //numTwo = parseFloat(nextNum)
                 nextNum = '';
                 console.log("numOne: " + numOne + '\n' + operand + "\n" + "numTwo: " + numTwo)
                 numOne = operate(numOne, numTwo, operand);
@@ -47,6 +51,11 @@ buttons.map (function mapNumTwo(button) {
                 nextNum = '';
                 display.innerText = '/';
                 break;
+            case '.':
+                if (!display.innerText.includes('.')){
+                    display.innerText += e.target.innerText;
+                };
+                break;
             default:
                 display.innerText += e.target.innerText;
                 if (display.innerText[0] == '+' ||
@@ -64,30 +73,47 @@ buttons.map (function mapNumTwo(button) {
 })
 
 function operate(numOne, numTwo, operand){
-    numOne = parseInt(numOne);
-    numTwo = parseInt(numTwo);
+    numOne = parseFloat(numOne);
+    numTwo = parseFloat(numTwo);
+    if (numTwo === NaN){
+        display.innerText = numOne;
+        return numOne;
+    }
     switch(operand){
         case '+':
             numOne = numOne + numTwo;
+            numTwo = 0;
             display.innerText = numOne;
             return numOne;
         case '-':
             numOne = numOne - numTwo;
+            numTwo = 0;
             display.innerText = numOne;
             return numOne;
         case '*':
             numOne = numOne * numTwo;
+            numTwo = 0;
             display.innerText = numOne;
             return numOne;
         case '/':
-            numOne = numOne / numTwo;
+            if (numTwo == 0){
+                display.innerText = "Nope!"
+            }
+                else{
+                    numOne = numOne / numTwo;
+                    numTwo = 0;
+                    display.innerText = numOne;
+                }
+            return numOne;
+        case null:
             display.innerText = numOne;
             return numOne;
     }
 }
 
 function test(){
-    console.log("numOne: " + numOne + '\n' + "numTwo: " + numTwo)
+    console.log(display.innerText.includes('.'))
+    //console.log("numOne: " + numOne + '\n' + "numTwo: " + numTwo)
     //console.log(parseInt(display.innerText[1]))
     //console.log(nextNum)
 }
