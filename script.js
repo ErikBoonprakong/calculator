@@ -112,11 +112,3 @@ function operate(numOne, numTwo, operator){
             return numOne;
     }
 }
-
-function test(){
-    //console.log(display.innerText.includes('.'))
-    //console.log("numOne: " + numOne + '\n' + "numTwo: " + numTwo)
-    //console.log(parseInt(display.innerText[1]))
-    //console.log(nextNum)
-}
-
