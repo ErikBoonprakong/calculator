@@ -4,6 +4,7 @@ let numTwo = 0;
 let operand = null;
 let buttons = Array.from(document.getElementsByClassName('button'))
 let nextNum = ''
+//edit
 
 buttons.map (function mapNumTwo(button) {
     button.addEventListener('click', (e) => {
