@@ -1,15 +1,14 @@
 let display = document.getElementById('display')
 let numOne = 0;
 let numTwo = 0;
-let operand = null;
+let operator = null;
 let buttons = Array.from(document.getElementsByClassName('button'))
 let nextNum = ''
-//edit
 
 buttons.map (function mapNumTwo(button) {
     button.addEventListener('click', (e) => {
         switch(e.target.innerText){
-            case 'CLEAR ALL':
+            case 'AC':
                 display.innerText = '';
                 nextNum = '';
                 break;
@@ -33,8 +32,8 @@ buttons.map (function mapNumTwo(button) {
                     }
                 //numTwo = parseFloat(nextNum)
                 nextNum = '';
-                console.log("numOne: " + numOne + '\n' + operand + "\n" + "numTwo: " + numTwo)
-                numOne = operate(numOne, numTwo, operand);
+                console.log("numOne: " + numOne + '\n' + operator + "\n" + "numTwo: " + numTwo)
+                numOne = operate(numOne, numTwo, operator);
                 break;
             case '+':
                 nextNum = '';
@@ -58,43 +57,45 @@ buttons.map (function mapNumTwo(button) {
                 };
                 break;
             default:
-                display.innerText += e.target.innerText;
-                if (display.innerText[0] == '+' ||
-                    display.innerText[0] == '-' ||
-                    display.innerText[0] == '*' ||
-                    display.innerText[0] == '/'){
-                    nextNum += e.target.innerText.toString()
-                    operand = display.innerText[0]
-                }
-                    else{
-                        numOne = display.innerText
+                if (display.innerText.length <= 8){
+                    display.innerText += e.target.innerText;
+                    if (display.innerText[0] == '+' ||
+                        display.innerText[0] == '-' ||
+                        display.innerText[0] == '*' ||
+                        display.innerText[0] == '/'){
+                        nextNum += e.target.innerText.toString()
+                        operator = display.innerText[0]
                     }
+                        else{
+                            numOne = display.innerText
+                        }
+                }
         }
     })
 })
 
-function operate(numOne, numTwo, operand){
+function operate(numOne, numTwo, operator){
     numOne = parseFloat(numOne);
     numTwo = parseFloat(numTwo);
     if (numTwo === NaN){
-        display.innerText = numOne;
+        display.innerText = Number(numOne.toPrecision(8));
         return numOne;
     }
-    switch(operand){
+    switch(operator){
         case '+':
             numOne = numOne + numTwo;
             numTwo = 0;
-            display.innerText = numOne;
+            display.innerText = Number(numOne.toPrecision(8));
             return numOne;
         case '-':
             numOne = numOne - numTwo;
             numTwo = 0;
-            display.innerText = numOne;
+            display.innerText = Number(numOne.toPrecision(8));
             return numOne;
         case '*':
             numOne = numOne * numTwo;
             numTwo = 0;
-            display.innerText = numOne;
+            display.innerText = Number(numOne.toPrecision(8));
             return numOne;
         case '/':
             if (numTwo == 0){
@@ -103,17 +104,17 @@ function operate(numOne, numTwo, operand){
                 else{
                     numOne = numOne / numTwo;
                     numTwo = 0;
-                    display.innerText = numOne;
+                    display.innerText = Number(numOne.toPrecision(8));
                 }
             return numOne;
         case null:
-            display.innerText = numOne;
+            display.innerText = Number(numOne.toPrecision(8));
             return numOne;
     }
 }
 
 function test(){
-    console.log(display.innerText.includes('.'))
+    //console.log(display.innerText.includes('.'))
     //console.log("numOne: " + numOne + '\n' + "numTwo: " + numTwo)
     //console.log(parseInt(display.innerText[1]))
     //console.log(nextNum)
